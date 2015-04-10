@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #d0e4fe;
+        }
+
+        #mainTitle {
+            color: orange;
+            text-align: center;
+        }
+
+        p {
+            font-family: "Times New Roman";
+            font-size: 20px;
+        }
+        .ul-style-none{
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+        }
+        .list-inline li{
+            display: inline;
+            float: left;
+            list-style-type: none;
+            padding-right: 10px;
+        }
+        .float-left{
+            float: left;
+        }
+        .float-right{
+            float: right;
+        }
+        .float-center{
+            margin: 0 auto;
+        }
+        .text-left{
+            text-align: left;
+        }
+        .text-right{
+            text-align: right;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .mainBoarder{
+            position:fixed;
+            height:auto;
+            bottom:0;
+            top:10%;
+            left:0;
+            right:0;
+            margin-top:20px;
+            margin-bottom:20px;
+            margin-right:2%;
+            margin-left:73%;
+            border-radius: 13px;
+            background-color: lightgoldenrodyellow;
+        }
+        .dropArea{
+            position:fixed;
+            height:auto;
+            bottom:0;
+            top:10%;
+            left:0;
+            right:0;
+            margin-top:20px;
+            margin-bottom:20px;
+            margin-right:28%;
+            margin-left:2%;
+            border-radius: 13px;
+            background-color: lightgoldenrodyellow;
+            z-index: -1;
+        }
+        .inrDrpArea{
+            position: absolute;
+            height:auto;
+            bottom:0;
+            top:0%;
+            left:12%;
+            right:-9%;
+            margin-top:20px;
+            margin-bottom:20px;
+            margin-right:28%;
+            margin-left:2%;
+            border-radius: 13px;
+            background-color: #f8f8ff;
+            max-height: 100%;
+            overflow: auto;
+            /*width: 599px;*/
+        }
+        .clearfix{
+            margin-bottom: 15px;
+        }
+        .blocks{
+            border: 2px solid #ccc;
+            padding: 1px;
+            min-height: 49px;
+            width: 80%;
+            left:12%;
+            right:-9%;
+
+        }
+        #dvSource
+        {
+            padding: 22px;
+            min-height: 100px;
+            max-height: 500px;
+            overflow: auto;
+            width: 99%;
+        }
+        .draggable
+        {
+            filter: alpha(opacity=60);
+        }
+        .dropped
+        {
+            position: static !important;
+        }
+        .defaultDropableArea{
+            min-height:50px;
+            border: 1px solid #e2e2e2;
+            margin:10px;
+            /*text-align: center;*/
+            padding-top: 5px;
+        }
+        .afterDropableArea{
+            min-height:0px;
+            margin:10px;
+            padding: 0px;
+            overflow: auto;
+        }
+        .displayBlock{
+            display: block;
+        }
+        .displayNone{
+            display: none;
+        }
+        .hoverDragClass{
+            border: 5px solid #e2e2e2;
+        }
+        #ul-sortable p{
+            font-size: 13px;
+            -webkit-margin-before: 0.5em;
+            -webkit-margin-after: 0.5em;
+        }
+        #sortable { list-style: none; padding: 0; }
+        #sortable li { border: 1px solid black; }
+        img{
+            height:170px
+            width:auto;/*maintain aspect ratio*/
+            max-width:500px;
+        }
+
+    </style>
+
+    <!--Editor links-->
+    <!--<script src="javascripts/prototype.js" type="text/javascript"></script>
+    <script src="javascripts/effects.js" type="text/javascript"></script>
+    <script src="javascripts/controls.js" type="text/javascript"></script>
+    <script src="javascripts/patch_inplaceeditor_1-8-2.js" type="text/javascript"></script>
+    <script src="javascripts/patch_inplaceeditor_editonblank_1-8-2.js" type="text/javascript"></script>
+    <script src="javascripts/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+    <script src="javascripts/tiny_mce_init.js" type="text/javascript"></script>
+    <script src="javascripts/inplacericheditor.js" type="text/javascript"></script>-->
+
+
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+
+
+
+    <link rel="stylesheet" href="jquery-ui.css">
+    <link href="jquery.contextMenu.css" rel="stylesheet" type="text/css" />
+    <script src="jquery.min.js"></script>
+    <script src="jquery-ui-git.js"></script>
+    <script src="jquery.contextMenu.js" type="text/javascript"></script>
+
+
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            theme: "modern",
+            menubar: false
+            /*plugins: [
+                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars code fullscreen",
+                "insertdatetime media nonbreaking save table contextmenu directionality",
+                "emoticons template paste textcolor colorpicker textpattern"
+            ],*/
+            //toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons"
+            //toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            //toolbar2: "print preview media | forecolor backcolor emoticons",
+            //image_advtab: true
+            /*templates: [
+                {title: 'Test template 1', content: 'Test 1'},
+                {title: 'Test template 2', content: 'Test 2'}
+            ]*/
+        });
+    </script>
+
+
+
+</head>
+<body>
+
+<h1 id="mainTitle">Jquery Drag and Drop  Example</h1>
+<div class="mainBoarder">
+    <div class="fromDragArea">
+        <div id="dvSource" class="draggableClass clearfix">
+            <ul class="list-inline ul-style-none">
+                <li id="textImg">
+                    <img  src="images/dragImages/textimg.png" width="130" height="100"/>
+                </li>
+                <li id="imageImg">
+                    <img  src="images/dragImages/imageimg.png" width="130" height="100"/>
+                </li>
+            </ul>
+            <!--<img class="draggableClass" alt="" src="images/Desert.jpg" width="130" height="100"/>
+            <img class="draggableClass" alt="" src="images/Hydrangeas.jpg" width="130" height="100"/>
+            <img class="draggableClass" alt="" src="images/Jellyfish.jpg" width="130" height="100"/>
+            <img class="draggableClass" alt="" src="images/Koala.jpg" width="130" height="100"/>
+            <img class="draggableClass" alt="" src="images/Lighthouse.jpg" width="130" height="100"/>
+            <img class="draggableClass" alt="" src="images/Penguins.jpg" width="130" height="100"/>
+            <img class="draggableClass" alt="" src="images/Tulips.jpg" width="130" height="100"/>-->
+        </div>
+    </div>
+    <div id="dialog-3" style="display: none">
+        <textarea id="contentData"  title="Dialog Title goes here..."></textarea>
+    </div>
+
+
+    <div class="dropArea">
+    <div id="sortable" class="inrDrpArea clearfix ui-sortable">
+        <ul id="ul-sortable" class="ul-style-none">
+            <li id="text_0"  class="ui-state-default defaultDropableArea context-menu-one box menu-1">Item 1</li>
+        </ul>
+
+
+    </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+
+
+
+    $(function(){
+        var file, formData, currentUploadedImage, currentUploadButton, currentGeneratedButton;
+        function uploadFile(){
+            var input = document.getElementById(currentUploadButton);
+            file = input.files[0];
+            if(file != undefined){
+                formData= new FormData();
+                if(!!file.type.match(/image.*/)){
+                    formData.append("image", file);
+                    console.log('File uploading...',formData);
+                    $.ajax({
+                        url: "http://localhost/dragExample/upload.php",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(data){
+                            console.log('success response',data);
+                            if(data != 'Error'){
+                                console.log('success response',data);
+                                $('#'+currentUploadedImage).attr('src', data);
+                                $('#'+currentUploadButton).css('display', 'none');
+                            }
+
+                        }
+                    });
+                }else{
+                    alert('Not a valid image!');
+                }
+            }else{
+                alert('Input something!');
+            }
+        }
+
+        $(document).on('change',currentGeneratedButton , function(){
+
+            currentUploadedImage = $('#'+currentGeneratedButton).closest('li').attr('id');
+
+            currentUploadedImage = $('#'+currentUploadedImage).children().attr('id');
+            currentUploadButton = currentGeneratedButton;
+            console.log('changed yes', currentUploadedImage);
+            uploadFile();
+        });
+
+        var editorId = '';
+        $( "#dialog-3" ).dialog({
+            autoOpen: false,
+            hide: "puff",
+            show : "slide",
+            buttons: {
+                save: function() {
+                    var editorData = tinymce.get('contentData').getContent();
+                    console.log('Content Data: ',editorId);
+                    $('#'+editorId).html(editorData);
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+
+
+        var textDivIDCount = 0;
+        var imageDivIDCount = 0;
+        $('#sortable').sortable({
+            refreshPositions: false,
+            helper: 'clone',
+            items: 'li',
+            revert: true,
+            receive: function( event, ui ) {
+                console.log( ui.item );
+            }
+        });
+        $('.draggableClass').find('li').draggable({
+            //connectToSortable: '#sortable',
+            helper: 'clone',
+            revert: true
+
+        });
+        $( '#sortable' ).droppable({
+            helper: 'clone',
+            items: 'li',
+            revert: true,
+            drop: function(event, ui){
+                var droppableId = ui.draggable.attr("id");
+
+                if(droppableId == 'textImg'){
+                    textDivIDCount++;
+                    $('#ul-sortable').append('<li id="text" class="ui-state-default defaultDropableArea context-menu-one box menu-1" >headder</li>');
+                    $('#inrHeadder').attr('id', 'text_'+textDivIDCount);
+                }else if(droppableId == 'imageImg'){
+                    imageDivIDCount++;
+                    $('#ul-sortable').append('<li id="image" class="ui-state-default defaultDropableArea context-menu-one box menu-1" ><img id="imageUpload" src="images/upload/placeholder_2-470x352.jpg" accept="image/*"><br><input type="file" id="fileUpload"></li>');
+                    $('#image').attr('id', 'image_'+imageDivIDCount);
+                    $('#imageUpload').attr('id', 'imageUpload_'+imageDivIDCount);
+                    $('#fileUpload').attr('id', 'fileUpload_'+imageDivIDCount);
+                    currentGeneratedButton = 'fileUpload_'+imageDivIDCount;
+                    console.log( 'Genereated button: ', currentGeneratedButton);
+                }
+            }
+        });
+
+        $.contextMenu({
+            selector: '.context-menu-one',
+            callback: function(key, options) {
+                //var m = "global: " + key;
+                //window.console && console.log(m) || alert(m);
+                if(key == 'delete'){
+                    $("#"+$(this).attr("id")).remove();
+                }if(key == 'edit'){
+                    var openStatus = '';
+                    editorId = $(this).attr("id");
+                    openStatus = $( "#dialog-3" ).dialog( "open" );
+                    var divData = document.getElementById($(this).attr("id"));
+                        tinyMCE.activeEditor.setContent(divData.innerHTML);
+                }
+            },
+            items: {
+                "edit": {
+                    name: "Edit",
+                    icon: "edit"
+                   /* // superseeds "global" callback
+                    callback: function(key, options) {
+                        //var m = "edit was clicked";
+                        //window.console && console.log(m) || alert(m);
+                    }*/
+                },
+                "cut": {name: "Cut", icon: "cut"},
+                "copy": {name: "Copy", icon: "copy"},
+                "paste": {name: "Paste", icon: "paste"},
+                "delete": {name: "Delete", icon: "delete"},
+                "sep1": "---------",
+                "quit": {name: "Quit", icon: "quit"}
+            }
+        });
+    });
+
+
+</script>
+
+
+</body>
+</html>
